@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_metadata</key>
+	<dict>
+		<key>created_by</key>
+		<string>ladmin</string>
+		<key>creation_date</key>
+		<date>2021-12-08T16:22:39Z</date>
+		<key>munki_version</key>
+		<string>5.4.0.4348</string>
+		<key>os_version</key>
+		<string>10.15.7</string>
+	</dict>
+	<key>autoremove</key>
+	<false/>
+	<key>catalogs</key>
+	<array>
+		<string>production</string>
+	</array>
+	<key>description</key>
+	<string>Bye Bye Flash Player</string>
+	<key>display_name</key>
+	<string>Uninstall Flash Player in a Flash</string>
+	<key>icon_name</key>
+	<string>AdobeFlashPlayer.png</string>
+	<key>installcheck_script</key>
+	<string>#!/bin/bash
+##
+## olivier EMSELLEM - oem at oemden dot com for PR2i - 20211229
+##
+Version="0.1.1"
+
+## Check  if FLash is there
+FlashPlayer="/Applications/Utilities/Adobe Flash Player Install Manager.app"
+
+if [[ -d "${FlashPlayer} " ]] ; then
+	echo "Flash is here"
+	## An exit code of 0 indicates installation should occur.
+	exit 0
+else
+	echo "Flash is not here"
+	## An exit code of 0 indicates installation should occur.
+	exit 1
+fi
+
+</string>
+	<key>installer_type</key>
+	<string>nopkg</string>
+	<key>minimum_os_version</key>
+	<string>10.4.0</string>
+	<key>name</key>
+	<string>UninstallFlashPlayer</string>
+	<key>postinstall_script</key>
+	<string>#!/bin/bash
+##
+## olivier EMSELLEM - oem at oemden dot com for PR2i - 20190430
+##
+Version="0.1.1"
+## Source : https://soundmacguy.wordpress.com/2020/01/24/uninstalling-adobe-flash-player-in-a-flash/
+
+clear ; echo
+
+"/Applications/Utilities/Adobe Flash Player Install Manager.app/Contents/MacOS/Adobe Flash Player Install Manager" -uninstall
+</string>
+	<key>preinstall_script</key>
+	<string>#!/bin/bash
+##
+## olivier EMSELLEM - oem at oemden dot com for PR2i - 20190430
+##
+Version="0.1.1"
+
+#Let's quit the Adobe Flash Player Install Manager.app first
+
+osascript -e 'quit app "Adobe Flash Player Install Manager"' # put this as a precheck_script in munki
+</string>
+	<key>unattended_install</key>
+	<true/>
+	<key>version</key>
+	<string>1.0</string>
+</dict>
+</plist>
